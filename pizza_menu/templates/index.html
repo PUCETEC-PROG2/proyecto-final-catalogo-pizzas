@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Pizzas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .logo {
+            max-width: 200px; /* Ajusta el tamaño del logotipo si es necesario */
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            width: 200px; /* Ajusta el ancho de los botones si es necesario */
+        }
+        .btn-group .btn {
+            margin-bottom: 10px; /* Espacio entre los botones */
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+    <img src="{% static 'logopi.png' %}" alt="Logotipo" class="logo">
+
+    <div class="btn-group">
+        <a href="#categoria" class="btn btn-primary">Categoría</a>
+        <a href="#producto" class="btn btn-primary">Producto</a>
+        <a href="#clientes" class="btn btn-primary">Clientes</a>
+        <a href="#compras" class="btn btn-primary">Compras</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
