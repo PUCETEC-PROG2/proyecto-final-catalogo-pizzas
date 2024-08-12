@@ -18,7 +18,7 @@ class Product(models.Model):
         return self.name
     
 #Creo la tabla Clientes
-class Costumer(models.Model):
+class Customer(models.Model):
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
     email = models.EmailField(unique=True)
