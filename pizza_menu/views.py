@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Customer, Purchase
 from .forms import CategoryForm, ProductForm, PurchaseForm
 
+#index
+def index(request):
+    return render(request, 'index.html')
+
 # View para listar las categorías
 def category_list(request):
     categories = Category.objects.all()

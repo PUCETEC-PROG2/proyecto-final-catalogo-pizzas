@@ -28,7 +28,7 @@ class Customer(models.Model):
     
 #Creo la tabla Compras
 class Purchase(models.Model):
-    customer = models.ForeignKey(Costumer, on_delete=models.CASCADE, related_name='purchases')#Relación de uno a muchos con la tabla Purchase 
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='purchases')#Relación de uno a muchos con la tabla Purchase 
     products = models.ManyToManyField(Product, through='PurchaseItem')#Relación de muchos a muchos con la tabla Productos, por la tabla intermedia PurchaseItem
     date = models.DateTimeField(auto_now_add=True)
 

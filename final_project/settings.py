@@ -80,8 +80,8 @@ DATABASES = {
         'NAME': 'pizza_menu',
         'HOST': 'localhost',
         'PORT': '5432',
-        'USER': 'admin',
-        'PASSWORD': 'admin'
+        'USER': 'postgres',
+        'PASSWORD': 'vpnywfcv7'
     }
 }
 
