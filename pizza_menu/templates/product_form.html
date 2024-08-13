@@ -1,7 +1,7 @@
 {% extends "index.html" %}
-{% block title %}Nueva Categoría{% endblock title %}
+{% block title %}Nuevo Producto{% endblock title %}
 {% block content %}
-    <h1>Crear Nueva Categoría</h1>
+    <h1>Crear Nuevo Producto</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
