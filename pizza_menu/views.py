@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Customer, Purchase
 from .forms import CategoryForm, ProductForm, PurchaseForm, CustomerForm
+from django.contrib.auth.views import LoginView 
+from django.contrib.auth.decorators import login_required
 
 #index
 def index(request):
@@ -23,6 +25,7 @@ def category_create(request):
     return render(request, 'category_form.html', {'form': form})
 
 # View para editar una categoría existente
+@login_required
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -35,6 +38,7 @@ def category_update(request, pk):
     return render(request, 'category_form.html', {'form': form})
 
 # View para eliminar una categoría
+@login_required
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -134,3 +138,6 @@ def customer_delete(request, pk):
         category.delete()
         return redirect('customer_list')
     return render(request, 'customer_confirm_delete.html', {'category': category})
+
+class CustomLoginView(LoginView):
+    template_name = "login.html"

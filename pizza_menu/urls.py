@@ -23,6 +23,8 @@ urlpatterns = [
     path('customer/new/', views.customer_create, name='customer_create'),
     path('customer/<int:pk>/edit/', views.customer_update, name='customer_update'),
     path('customer/<int:pk>/delete/', views.customer_delete, name='customer_delete'),
+
+    path("login/", views.CustomLoginView.as_view(), name="login"),
 ]
 
 
