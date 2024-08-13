@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block title %}Lista de Categorías{% endblock title %}
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Categorías</h1>
+        <a href="{% url 'pizza_menu:category_create' %}" class="btn btn-success">
+            <i class="fa fa-plus"></i> Nueva Categoría
+        </a>
+    </div>
+    <div class="card-group">   
+        {% for category in categories %}
+            <div class="card m-2" style="min-width: 200px;">
+                <div class="card-body">
+                    <h4 class="card-title">{{ category.name }}</h4>
+                    <a href="{% url 'pizza_menu:category_update' category.id %}" class="btn btn-primary">
+                        <i class="fa fa-pencil"></i> Editar 
+                    </a>
+                    <a href="{% url 'pizza_menu:category_delete' category.id %}" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Eliminar 
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

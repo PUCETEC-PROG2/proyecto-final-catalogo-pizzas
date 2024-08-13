@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block title %}Nueva Categoría{% endblock title %}
+{% block content %}
+    <h1>Crear Nueva Categoría</h1>
+    <form method="post" action="{% url 'pizza_menu:category_create' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+{% endblock %}
+
+

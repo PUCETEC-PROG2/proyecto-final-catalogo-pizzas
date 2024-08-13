@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Product, Purchase
+from .models import Category, Product, Purchase, Customer
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -15,16 +15,16 @@ class CategoryForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'categories', 'price', 'ingredients']
+        fields = ['name', 'sizes', 'price', 'ingredients']  
         labels = {
             'name': 'Nombre del Producto',
-            'categories': 'Categorías',
+            'sizes': 'Categoría',  
             'price': 'Precio',
             'ingredients': 'Ingredientes',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'categories': forms.CheckboxSelectMultiple(),
+            'sizes': forms.Select(attrs={'class': 'form-control'}), 
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'ingredients': forms.Textarea(attrs={'class': 'form-control'}),
         }
@@ -40,4 +40,19 @@ class PurchaseForm(forms.ModelForm):
         widgets = {
             'customer': forms.Select(attrs={'class': 'form-control'}),
             'products': forms.CheckboxSelectMultiple(),
+        }
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model: Customer
+        fields = ['name', 'last_name', 'email']
+        labels = {
+            'name': 'Nombre',
+            'last_name': 'Apellido',
+            'email': 'Correo',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
         }

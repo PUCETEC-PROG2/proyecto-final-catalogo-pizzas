@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 
 app_name = 'pizza_menu'
@@ -16,8 +15,14 @@ urlpatterns = [
     path('product/<int:pk>/edit/', views.product_update, name='product_update'),
     path('product/<int:pk>/delete/', views.product_delete, name='product_delete'),
 
-    path('purchases/', views.purchase_list, name='product_list'),
-    path('purchase/new/', views.purchase_create, name='product_create'),
+    path('purchases/', views.purchase_list, name='purchase_list'),
+    path('purchase/new/', views.purchase_create, name='purchase_create'),
     path('purchase/<int:pk>/', views.purchase_detail, name='purchase_detail'),
+
+    path('customers/', views.customer_list, name='customer_list'),
+    path('customer/new/', views.customer_create, name='customer_create'),
+    path('customer/<int:pk>/edit/', views.customer_update, name='customer_update'),
+    path('customer/<int:pk>/delete/', views.customer_delete, name='customer_delete'),
 ]
+
 
