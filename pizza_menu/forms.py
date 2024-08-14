@@ -44,15 +44,15 @@ class PurchaseForm(forms.ModelForm):
 
 class CustomerForm(forms.ModelForm):
     class Meta:
-        model: Customer
-        fields = ['name', 'last_name', 'email']
+        model = Customer
+        fields = ['first_name', 'last_name', 'email']
         labels = {
-            'name': 'Nombre',
+            'first_name': 'Nombre',
             'last_name': 'Apellido',
             'email': 'Correo',
         }
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
         }
