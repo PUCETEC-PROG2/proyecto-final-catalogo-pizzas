@@ -18,14 +18,8 @@
                         <p><strong>Ingredientes:</strong> {{ product.ingredients }}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="{% url 'pizza_menu:product_update' product.id %}" class="btn btn-primary">
-                            <i class="fa fa-pencil"></i> Editar
-                        </a>
                         <a href="{% url 'pizza_menu:product_list' %}" class="btn btn-secondary">
                             <i class="fa fa-arrow-left"></i> Volver a la Lista
-                        </a>
-                        <a href="{% url 'pizza_menu:product_delete' product.id %}" class="btn btn-danger">
-                            <i class="fa fa-trash"></i> Eliminar
                         </a>
                     </div>
                 </div>

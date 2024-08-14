@@ -4,7 +4,26 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar Compra</button>
+    <button type="submit">Guardar</button>
   </form>
+
+  <script>
+    const productCheckboxes = document.querySelectorAll('input[name="products"]');
+    const totalField = document.querySelector('input[name="total"]');
+
+    productCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+            const productId = checkbox.value;
+            const productPrice = parseFloat(checkbox.dataset.price);
+            const isChecked = checkbox.checked;
+
+            if (isChecked) {
+                totalField.value = parseFloat(totalField.value) + productPrice;
+            } else {
+                totalField.value = parseFloat(totalField.value) - productPrice;
+            }
+        });
+    });
+</script>
 {% endblock %}
 
