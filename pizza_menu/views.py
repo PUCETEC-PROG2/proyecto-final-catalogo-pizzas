@@ -102,14 +102,15 @@ def purchase_create(request):
                 purchase = form.save(commit=False)
                 purchase.save()  # Guardar la instancia de Purchase
                 form.save_m2m()  # Guardar las relaciones many-to-many
-                return redirect('pizza_menu:purchase_list')  
+                
+                # Redirigir a la vista de lista de compras después de guardar
+                return redirect('pizza_menu:purchase_list')  # Actualiza este nombre según tu configuración de URL
             except Exception as e:
                 print(f"Error al guardar la compra: {e}")
         else:
             print(f"Errores en el formulario: {form.errors}")
     else:
         form = PurchaseForm()
-
     return render(request, 'purchase_form.html', {'form': form})
 
 
