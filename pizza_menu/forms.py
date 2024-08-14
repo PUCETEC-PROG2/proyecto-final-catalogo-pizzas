@@ -36,15 +36,18 @@ class PurchaseForm(forms.ModelForm):
 
     class Meta:
         model = Purchase
-        fields = ['customer', 'products']
+        fields = ['customer', 'date', 'products']
 
     def save(self, commit=True):
         purchase = super().save(commit=False)
-        purchase.calculate_total()
+
         if commit:
-            purchase.save()
-            self.save_m2m()
+            purchase.save()  # Guardar la instancia de Purchase
+            self.save_m2m()  # Guardar las relaciones many-to-many después
+
         return purchase
+
+
 
 
 class CustomerForm(forms.ModelForm):

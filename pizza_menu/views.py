@@ -94,25 +94,26 @@ def purchase_list(request):
     return render(request, 'purchase_list.html', {'purchases': purchases})
 
 # View para crear una nueva compra
-def new_purchase(request):
-    if request.method == "POST":
+def purchase_create(request):
+    if request.method == 'POST':
         form = PurchaseForm(request.POST)
+        
         if form.is_valid():
-            # Crear el objeto Purchase pero no guardarlo aún
-            purchase = form.save(commit=False)
-            # Asignar el cliente actual (suponiendo que 'customer' se refiere al usuario)
-            purchase.customer = form.cleaned_data['customer']
-            # Establecer la relación ManyToMany para 'products'
-            products = form.cleaned_data['products']
-            # Guardar el objeto Purchase
-            purchase.save()
-            purchase.products.set(products)  # Reemplaza los productos asociados
-            # Calcular el total
-            purchase.calculate_total()  # Llamada al método para calcular el total
-            return redirect('pizza_menu:purchase_list')
+            try:
+                purchase = form.save(commit=False)
+                purchase.save()  # Guardar la instancia de Purchase
+                form.save_m2m()  # Guardar las relaciones many-to-many
+                
+                # Redirigir a la vista de lista de compras después de guardar
+                return redirect('pizza_menu:purchase_list')  # Actualiza este nombre según tu configuración de URL
+            except Exception as e:
+                print(f"Error al guardar la compra: {e}")
+        else:
+            print(f"Errores en el formulario: {form.errors}")
     else:
         form = PurchaseForm()
-    return render(request, 'new_purchase.html', {'form': form})
+
+    return render(request, 'purchase_form.html', {'form': form})
 
 
 # View para ver detalles de una compra
