@@ -62,6 +62,11 @@ def product_create(request):
         form = ProductForm()
     return render(request, 'product_form.html', {'form': form})
 
+# View para ver los detalles del producto
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'product_detail.html', {'product': product})
+
 # View para editar un producto existente
 def product_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -79,7 +84,7 @@ def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
         product.delete()
-        return redirect('product_list')
+        return redirect('pizza_menu:product_list')
     return render(request, 'product_confirm_delete.html', {'product': product})
 
 # View para listar las compras

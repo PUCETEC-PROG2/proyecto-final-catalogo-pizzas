@@ -14,6 +14,7 @@ urlpatterns = [
     path('product/new/', views.product_create, name='product_create'),
     path('product/<int:pk>/edit/', views.product_update, name='product_update'),
     path('product/<int:pk>/delete/', views.product_delete, name='product_delete'),
+    path('product/<int:pk>/detail/', views.product_detail, name='product_detail'),
 
     path('purchases/', views.purchase_list, name='purchase_list'),
     path('purchase/new/', views.purchase_create, name='purchase_create'),
