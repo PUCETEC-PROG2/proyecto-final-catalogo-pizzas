@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block title %}Detalles de la compra{% endblock title %}
+
+{% block content %}
+<div class="mt-4">
+    <h1 class="mb-4">Detalles de la compra</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Cliente: {{ purchase.customer.name }}</h5>
+            <p class="card-text"><strong>Fecha:</strong> {{ purchase.date }}</p>
+            <p class="card-text"><strong>Productos:</strong></p>
+            <ul class="list-group list-group-flush">
+                {% for product in purchase.products.all %}
+                <li class="list-group-item">
+                    {{ product.name }} - ${{ product.price }}
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="card-text mt-3"><strong>Total:</strong> ${{ purchase.total }}</p>
+            <a href="{% url 'pizza_menu:purchase_list' %}" class="btn btn-secondary mt-3">Regresar a la lista</a>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

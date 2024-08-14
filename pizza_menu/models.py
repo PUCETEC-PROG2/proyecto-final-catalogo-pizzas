@@ -26,12 +26,18 @@ class Customer(models.Model):
     
 #Creo la tabla Compras
 class Purchase(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='purchases')#Relación de uno a muchos con la tabla Purchase 
-    products = models.ManyToManyField(Product, through='PurchaseItem')#Relación de muchos a muchos con la tabla Productos, por la tabla intermedia PurchaseItem
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    products = models.ManyToManyField(Product)
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    def __str__(self): 
-        return f'Purchase {self.id} by {self.customer}'
+    def calculate_total(self):
+        total = sum([product.price for product in self.products.all()])
+        self.total = total
+        self.save()
+
+    def __str__(self):
+        return f"Purchase {self.id} - {self.customer.first_name}"
     
 #Creo la tabla intermedia PurchaseItem
 class PurchaseItem(models.Model):

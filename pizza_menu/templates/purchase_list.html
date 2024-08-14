@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block title %}Compras{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Compras</h2>
+    <div class="mb-3">
+        <a href="{% url 'pizza_menu:new_purchase' %}" class="btn btn-primary">Añadir nueva compra</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.date }}</td>
+                <td>{{ purchase.customer }}</td>
+                <td>
+                    <a href="{% url 'pizza_menu:purchase_detail' purchase.id %}" class="btn btn-info">Ver detalles</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

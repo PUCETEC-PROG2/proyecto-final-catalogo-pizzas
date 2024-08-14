@@ -3,6 +3,7 @@ from .models import Category, Product, Customer, Purchase
 from .forms import CategoryForm, ProductForm, PurchaseForm, CustomerForm
 from django.contrib.auth.views import LoginView 
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 #index
 def index(request):
@@ -89,24 +90,35 @@ def product_delete(request, pk):
 
 # View para listar las compras
 def purchase_list(request):
-    purchases = Purchase.objects.all()
+    purchases = Purchase.objects.all().order_by('-date')
     return render(request, 'purchase_list.html', {'purchases': purchases})
 
+
 # View para crear una nueva compra
-def purchase_create(request):
-    if request.method == 'POST':
+def new_purchase(request):
+    if request.method == "POST":
         form = PurchaseForm(request.POST)
         if form.is_valid():
-            form.save()
+            purchase = form.save(commit=False)
+            purchase.customer = request.user
+            purchase.save()
+
+            # Manualmente establecer la relación ManyToMany para "products"
+            products = form.cleaned_data['products']
+            for product in products:
+                purchase.products.add(product)
+
             return redirect('purchase_list')
     else:
         form = PurchaseForm()
-    return render(request, 'purchase_form.html', {'form': form})
+
+    return render(request, 'new_purchase.html', {'form': form})
+
 
 # View para ver detalles de una compra
-def purchase_detail(request, pk):
-    purchase = get_object_or_404(Purchase, pk=pk)
-    return render(request, 'purchase_detail.html', {'purchase': purchase})
+def purchase_detail(request, purchase_id):
+    purchase = get_object_or_404(Purchase, id=purchase_id)
+    return render(request, 'purchases/purchase_detail.html', {'purchase': purchase})
 
 #View para listar a los clientes
 def customer_list(request):

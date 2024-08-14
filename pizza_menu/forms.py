@@ -30,17 +30,21 @@ class ProductForm(forms.ModelForm):
         }
 
 class PurchaseForm(forms.ModelForm):
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    date = forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'form-control'}))
+    products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), widget=forms.CheckboxSelectMultiple())
+
     class Meta:
         model = Purchase
         fields = ['customer', 'products']
-        labels = {
-            'customer': 'Cliente',
-            'products': 'Productos',
-        }
-        widgets = {
-            'customer': forms.Select(attrs={'class': 'form-control'}),
-            'products': forms.CheckboxSelectMultiple(),
-        }
+
+    def save(self, commit=True):
+        purchase = super().save(commit=False)
+        purchase.calculate_total()
+        if commit:
+            purchase.save()
+            self.save_m2m()
+        return purchase
 
 class CustomerForm(forms.ModelForm):
     class Meta:
