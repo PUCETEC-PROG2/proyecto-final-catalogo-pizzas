@@ -57,7 +57,7 @@ def product_create(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('product_list')
+            return redirect('pizza_menu:product_list')
     else:
         form = ProductForm()
     return render(request, 'product_form.html', {'form': form})
@@ -69,7 +69,7 @@ def product_update(request, pk):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('product_list')
+            return redirect('pizza_menu:product_list')
     else:
         form = ProductForm(instance=product)
     return render(request, 'product_form.html', {'form': form})
@@ -121,23 +121,23 @@ def customer_create(request):
 
 # View para editar un cliente existente
 def customer_update(request, pk):
-    category = get_object_or_404(Customer, pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
     if request.method == 'POST':
-        form = CustomerForm(request.POST, instance=category)
+        form = CustomerForm(request.POST, instance=customer)
         if form.is_valid():
             form.save()
             return redirect('customer_list')
     else:
-        form = CustomerForm(instance=category)
+        form = CustomerForm(instance=customer)
     return render(request, 'customer_form.html', {'form': form})
 
-# View para eliminar una categoría
+# View para eliminar un cliente
 def customer_delete(request, pk):
-    category = get_object_or_404(Customer, pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
     if request.method == 'POST':
-        category.delete()
+        customer.delete()
         return redirect('customer_list')
-    return render(request, 'customer_confirm_delete.html', {'category': category})
+    return render(request, 'customer_confirm_delete.html', {'customer': customer})
 
 class CustomLoginView(LoginView):
     template_name = "login.html"

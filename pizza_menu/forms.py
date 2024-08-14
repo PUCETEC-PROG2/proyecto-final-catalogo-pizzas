@@ -15,16 +15,16 @@ class CategoryForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'sizes', 'price', 'ingredients']  
+        fields = ['name', 'sizes', 'price', 'ingredients']
         labels = {
             'name': 'Nombre del Producto',
-            'sizes': 'Categoría',  
+            'sizes': 'Categorías',
             'price': 'Precio',
             'ingredients': 'Ingredientes',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'sizes': forms.Select(attrs={'class': 'form-control'}), 
+            'sizes': forms.SelectMultiple(attrs={'class': 'form-control'}),  # Cambiado a SelectMultiple
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'ingredients': forms.Textarea(attrs={'class': 'form-control'}),
         }
