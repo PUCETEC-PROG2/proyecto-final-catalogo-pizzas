@@ -47,9 +47,6 @@ class PurchaseForm(forms.ModelForm):
 
         return purchase
 
-
-
-
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer

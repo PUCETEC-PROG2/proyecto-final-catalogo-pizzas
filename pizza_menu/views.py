@@ -94,7 +94,6 @@ def purchase_list(request):
     return render(request, 'purchase_list.html', {'purchases': purchases})
 
 # View para crear una nueva compra
-
 def purchase_create(request):
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
