@@ -46,6 +46,7 @@ class PurchaseForm(forms.ModelForm):
             self.save_m2m()
         return purchase
 
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer

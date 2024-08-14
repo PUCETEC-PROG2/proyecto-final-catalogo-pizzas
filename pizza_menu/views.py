@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, Customer, Purchase
+from .models import Category, Product, Customer, Purchase, PurchaseItem
 from .forms import CategoryForm, ProductForm, PurchaseForm, CustomerForm
 from django.contrib.auth.views import LoginView 
 from django.contrib.auth.decorators import login_required
@@ -93,32 +93,32 @@ def purchase_list(request):
     purchases = Purchase.objects.all().order_by('-date')
     return render(request, 'purchase_list.html', {'purchases': purchases})
 
-
 # View para crear una nueva compra
 def new_purchase(request):
     if request.method == "POST":
         form = PurchaseForm(request.POST)
         if form.is_valid():
+            # Crear el objeto Purchase pero no guardarlo aún
             purchase = form.save(commit=False)
-            purchase.customer = request.user
-            purchase.save()
-
-            # Manualmente establecer la relación ManyToMany para "products"
+            # Asignar el cliente actual (suponiendo que 'customer' se refiere al usuario)
+            purchase.customer = form.cleaned_data['customer']
+            # Establecer la relación ManyToMany para 'products'
             products = form.cleaned_data['products']
-            for product in products:
-                purchase.products.add(product)
-
-            return redirect('purchase_list')
+            # Guardar el objeto Purchase
+            purchase.save()
+            purchase.products.set(products)  # Reemplaza los productos asociados
+            # Calcular el total
+            purchase.calculate_total()  # Llamada al método para calcular el total
+            return redirect('pizza_menu:purchase_list')
     else:
         form = PurchaseForm()
-
     return render(request, 'new_purchase.html', {'form': form})
 
 
 # View para ver detalles de una compra
 def purchase_detail(request, purchase_id):
     purchase = get_object_or_404(Purchase, id=purchase_id)
-    return render(request, 'purchases/purchase_detail.html', {'purchase': purchase})
+    return render(request, 'purchase_detail.html', {'purchase': purchase})
 
 #View para listar a los clientes
 def customer_list(request):
