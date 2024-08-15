@@ -30,22 +30,14 @@ class ProductForm(forms.ModelForm):
         }
 
 class PurchaseForm(forms.ModelForm):
-    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
-    date = forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'form-control'}))
-    products = forms.ModelMultipleChoiceField(queryset=Product.objects.all(), widget=forms.CheckboxSelectMultiple())
-
     class Meta:
         model = Purchase
         fields = ['customer', 'date', 'products']
-
-    def save(self, commit=True):
-        purchase = super().save(commit=False)
-
-        if commit:
-            purchase.save()  # Guardar la instancia de Purchase
-            self.save_m2m()  # Guardar las relaciones many-to-many después
-
-        return purchase
+        widgets = {
+            'customer': forms.Select(attrs={'class': 'form-control'}),
+            'date': forms.SelectDateWidget(attrs={'class': 'form-control'}),
+            'products': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
+        }
 
 class CustomerForm(forms.ModelForm):
     class Meta:
