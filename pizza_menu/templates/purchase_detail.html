@@ -10,6 +10,8 @@
       <li>{{ product.name }} - {{ product.price }}</li>
     {% endfor %}
   </ul>
-  <a href="{% url 'pizza_menu:purchase_list' %}" class="btn btn-secondary">Volver a la Lista</a>
+  <a href="{% url 'pizza_menu:purchase_list' %}" class="btn btn-secondary">
+    <i class="fas fa-arrow-left"></i> Volver a la Lista
+  </a>
 {% endblock %}
 

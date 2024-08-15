@@ -34,4 +34,8 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f"Purchase {self.customer.first_name}"
+    
+class PurchaseItem(models.Model):
+    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
