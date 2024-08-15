@@ -1,20 +1,17 @@
 {% extends 'index.html' %}
-
+{% block title %}Nueva Compra{% endblock title %}
 {% block content %}
 <h1>Agregar Nueva Compra</h1>
 <form method="post">
     {% csrf_token %}
-    
     <div class="mb-3">
-        <label for="{{ form.customer.id_for_label }}" class="form-label">Customer:</label>
+        <label for="{{ form.customer.id_for_label }}" class="form-label">Cliente:</label>
         {{ form.customer }}
     </div>
     <div class="mb-3">
-        <label for="{{ form.date.id_for_label }}" class="form-label">Date:</label>
+        <label for="{{ form.date.id_for_label }}" class="form-label">Fecha:</label>
         {{ form.date }}
     </div>
-    
-    <!-- Aquí se añaden los checkboxes con los precios de los productos -->
     <fieldset>
         <legend>Selecciona los productos:</legend>
         {% for product in form.fields.products.queryset %}
@@ -24,14 +21,9 @@
             </div>
         {% endfor %}
     </fieldset>
-
-    <!-- Mostrar el total calculado en el navegador -->
     <p>Total: $<span id="total-amount">0.00</span></p>
-    
     <button type="submit" class="btn btn-primary">Guardar Compra</button>
 </form>
-
-<!-- Código JavaScript para calcular el total -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const productCheckboxes = document.querySelectorAll('input[name="product_ids"]');
@@ -47,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        console.log(`Total Calculado: ${total.toFixed(2)}`); // Depuración
         totalAmountSpan.textContent = total.toFixed(2);
     }
 

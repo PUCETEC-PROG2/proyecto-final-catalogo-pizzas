@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, Customer, Purchase, PurchaseItem
+from .models import Category, Product, Customer, Purchase
 from .forms import CategoryForm, ProductForm, PurchaseForm, CustomerForm
 from django.contrib.auth.views import LoginView 
 from django.contrib.auth.decorators import login_required
@@ -98,12 +98,8 @@ def purchase_create(request):
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
         if form.is_valid():
-            # Guardar la instancia de Purchase
-            purchase = form.save(commit=False)
-            purchase.save()
-            # Asociar los productos seleccionados
-            form.save_m2m()
-            return redirect('purchase_list')
+            form.save()  
+            return redirect('pizza_menu:purchase_list')
     else:
         form = PurchaseForm()
     return render(request, 'purchase_form.html', {'form': form})
