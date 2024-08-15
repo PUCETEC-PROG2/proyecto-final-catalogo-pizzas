@@ -29,27 +29,9 @@ class Customer(models.Model):
 class Purchase(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date = models.DateField()
-    products = models.ManyToManyField(Product, through='PurchaseItem')
+    products = models.ManyToManyField(Product)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-
-    def calculate_total(self):
-        # Asegúrate de que el método calculate_total suma correctamente los precios de los productos
-        purchase_items = self.purchaseitem_set.all()
-        print(f"Purchase items: {purchase_items}")  # Debug
-        total = sum(item.product.price for item in purchase_items)
-        print(f"Calculated total: {total}")  # Debug
-        self.total = total
-
-    def save(self, *args, **kwargs):
-        # Calcula el total antes de guardar la instancia
-        self.calculate_total()
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Purchase {self.customer.first_name}"
-    
-#Creo la tabla intermedia PurchaseItem
-class PurchaseItem(models.Model):
-    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)#La llave foránea con la relación de muchos a uno con Purchase
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)#La llave foránea con la relación de muchos a uno con Product
 

@@ -33,6 +33,11 @@ class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase
         fields = ['customer', 'date', 'products']
+        labels = {
+            'customer': 'Cliente',
+            'date': 'Fecha',
+            'products': 'Productos',
+        }
         widgets = {
             'customer': forms.Select(attrs={'class': 'form-control'}),
             'date': forms.SelectDateWidget(attrs={'class': 'form-control'}),
