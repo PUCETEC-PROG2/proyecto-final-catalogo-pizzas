@@ -98,11 +98,18 @@ def purchase_create(request):
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
         if form.is_valid():
-            form.save()  
+            purchase = form.save(commit=False)
+            total = 0
+            for product in form.cleaned_data['products']:
+                total += product.price
+            purchase.total = total
+            purchase.save()
+            form.save_m2m()  # Guarda las relaciones Many-to-Many
             return redirect('pizza_menu:purchase_list')
     else:
         form = PurchaseForm()
     return render(request, 'purchase_form.html', {'form': form})
+
 
 # View para ver detalles de una compra
 def purchase_detail(request, purchase_id):
