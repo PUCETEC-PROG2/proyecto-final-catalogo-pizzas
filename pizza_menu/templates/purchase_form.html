@@ -2,7 +2,8 @@
 {% block title %}Nueva Compra{% endblock title %}
 {% block content %}
 
-<form method="post">
+<h1>Agregar Nueva Compra</h1>
+<form method="POST" action="{% url 'pizza_menu:purchase_list' %}">
     {% csrf_token %}
     <div class="mb-3">
         <label for="{{ form.customer.id_for_label }}" class="form-label">Cliente:</label>
