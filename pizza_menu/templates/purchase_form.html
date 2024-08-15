@@ -6,8 +6,7 @@
     {% csrf_token %}
     
     {{ form.as_p }}
-<<<<<<< HEAD
-
+    
     <!-- Aquí se añaden los checkboxes con los precios de los productos -->
     <fieldset>
       <legend>Selecciona los productos:</legend>
@@ -50,28 +49,4 @@
       updateTotal(); // Calcular el total inicialmente
     });
   </script>
-=======
-    <button type="submit">Guardar</button>
-  </form>
-
-  <script>
-    const productCheckboxes = document.querySelectorAll('input[name="products"]');
-    const totalField = document.querySelector('input[name="total"]');
-
-    productCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', (event) => {
-            const productId = checkbox.value;
-            const productPrice = parseFloat(checkbox.dataset.price);
-            const isChecked = checkbox.checked;
-
-            if (isChecked) {
-                totalField.value = parseFloat(totalField.value) + productPrice;
-            } else {
-                totalField.value = parseFloat(totalField.value) - productPrice;
-            }
-        });
-    });
-</script>
->>>>>>> f20ad62c859a84e39980f8b5af0db8023c41c6df
 {% endblock %}
-
