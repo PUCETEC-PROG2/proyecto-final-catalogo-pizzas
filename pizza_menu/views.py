@@ -15,6 +15,7 @@ def category_list(request):
     return render(request, 'category_list.html', {'categories': categories})
 
 # View para crear una nueva categoría
+@login_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -53,6 +54,7 @@ def product_list(request):
     return render(request, 'product_list.html', {'products': products})
 
 # View para crear un nuevo producto
+@login_required
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -96,6 +98,7 @@ def purchase_list(request):
     return render(request, 'purchase_list.html', {'purchases': purchases})
 
 # View para crear una nueva compra
+@login_required
 def purchase_create(request):
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
@@ -123,6 +126,7 @@ def customer_list(request):
     return render(request, 'customer_list.html', {'customers':customers})
 
 # View para agregar un nuevo cliente
+@login_required
 def customer_create(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
