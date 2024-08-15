@@ -69,6 +69,7 @@ def product_detail(request, pk):
     return render(request, 'product_detail.html', {'product': product})
 
 # View para editar un producto existente
+@login_required
 def product_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -81,6 +82,7 @@ def product_update(request, pk):
     return render(request, 'product_form.html', {'form': form})
 
 # View para eliminar un producto
+@login_required
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -110,7 +112,6 @@ def purchase_create(request):
         form = PurchaseForm()
     return render(request, 'purchase_form.html', {'form': form})
 
-
 # View para ver detalles de una compra
 def purchase_detail(request, purchase_id):
     purchase = get_object_or_404(Purchase, id=purchase_id)
@@ -133,6 +134,7 @@ def customer_create(request):
     return render(request, 'customer_form.html', {'form': form})
 
 # View para editar un cliente existente
+@login_required
 def customer_update(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == 'POST':
@@ -145,6 +147,7 @@ def customer_update(request, pk):
     return render(request, 'customer_form.html', {'form': form})
 
 # View para eliminar un cliente
+@login_required
 def customer_delete(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == 'POST':
