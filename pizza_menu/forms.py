@@ -36,7 +36,7 @@ class PurchaseForm(forms.ModelForm):
         widgets = {
             'customer': forms.Select(attrs={'class': 'form-control'}),
             'date': forms.SelectDateWidget(attrs={'class': 'form-control'}),
-            'products': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),
+            'products': forms.CheckboxSelectMultiple(),
         }
 
 class CustomerForm(forms.ModelForm):

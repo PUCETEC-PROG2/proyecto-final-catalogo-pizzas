@@ -2,51 +2,60 @@
 
 {% block content %}
 <h1>Agregar Nueva Compra</h1>
-  <form method="post">
+<form method="post">
     {% csrf_token %}
     
-    {{ form.as_p }}
+    <div class="mb-3">
+        <label for="{{ form.customer.id_for_label }}" class="form-label">Customer:</label>
+        {{ form.customer }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.date.id_for_label }}" class="form-label">Date:</label>
+        {{ form.date }}
+    </div>
     
     <!-- Aquí se añaden los checkboxes con los precios de los productos -->
     <fieldset>
-      <legend>Selecciona los productos:</legend>
-      {% for product in form.fields.products.queryset %}
-        <div>
-          <input type="checkbox" name="products" id="product_{{ product.id }}" value="{{ product.id }}" data-price="{{ product.price }}">
-          <label for="product_{{ product.id }}">{{ product.name }} - ${{ product.price }}</label>
-        </div>
-      {% endfor %}
+        <legend>Selecciona los productos:</legend>
+        {% for product in form.fields.products.queryset %}
+            <div class="form-check">
+                <input type="checkbox" name="product_ids" id="product_{{ product.id }}" value="{{ product.id }}" data-price="{{ product.price }}" class="form-check-input">
+                <label for="product_{{ product.id }}" class="form-check-label">{{ product.name }} - ${{ product.price }}</label>
+            </div>
+        {% endfor %}
     </fieldset>
 
     <!-- Mostrar el total calculado en el navegador -->
     <p>Total: $<span id="total-amount">0.00</span></p>
     
     <button type="submit" class="btn btn-primary">Guardar Compra</button>
-  </form>
+</form>
 
-  <!-- Código JavaScript para calcular el total -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const productCheckboxes = document.querySelectorAll('input[name="products"]');
-      const totalAmountSpan = document.getElementById('total-amount');
+<!-- Código JavaScript para calcular el total -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productCheckboxes = document.querySelectorAll('input[name="product_ids"]');
+    const totalAmountSpan = document.getElementById('total-amount');
 
-      function updateTotal() {
+    function updateTotal() {
         let total = 0;
         productCheckboxes.forEach(checkbox => {
-          if (checkbox.checked) {
-            // Leer el precio del atributo data-price
-            const price = parseFloat(checkbox.getAttribute('data-price'));
-            total += price;
-          }
+            if (checkbox.checked) {
+                const price = parseFloat(checkbox.getAttribute('data-price'));
+                if (!isNaN(price)) {
+                    total += price;
+                }
+            }
         });
         totalAmountSpan.textContent = total.toFixed(2);
-      }
+    }
 
-      productCheckboxes.forEach(checkbox => {
+    productCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateTotal);
-      });
-
-      updateTotal(); // Calcular el total inicialmente
     });
-  </script>
+
+    updateTotal(); // Calcular el total inicialmente
+});
+</script>
 {% endblock %}
+
